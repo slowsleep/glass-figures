@@ -8,19 +8,66 @@
     <title>Стекляшки</title>
 </head>
 <body>
-    <div class="flex flex-row" id="app">
+    <div class="flex flex-row h-screen" id="app">
         <div class="left flex flex-col w-2/6 bg-slate-400 p-2">
-            <h1>создать фигуру</h1>
-            <select name="" id="">
-                <option value="">прямоугольник</option>
-                <option value="">квадрат</option>
-                <option value="">круг</option>
-                <option value="">овал</option>
-                <option value="">треугольник</option>
-            </select>
+            <form class="flex flex-col gap-y-2" action="">
+                <h1>создать фигуру</h1>
+                <div class="flex">
+                    <label class="w-1/3" for="figure">форма</label>
+                    <select class="w-2/3" name="figure" id="figure">
+                        <option value="">-- выберите фигуру --</option>
+                        <option value="rectangle">прямоугольник</option>
+                        <option value="square">квадрат</option>
+                        <option value="circle">круг</option>
+                        <option value="oval">овал</option>
+                        <option value="polygon">многоугольник</option>
+                    </select>
+                </div>
+                <div class="flex">
+                    <label class="w-1/3" for="width">ширина</label>
+                    <input class="w-2/3" type="number" name="width" id="width" min="0" max="1000" value="100">
+                </div>
+                <div class="flex">
+                    <label class="w-1/3" for="height">высота</label>
+                    <input class="w-2/3" type="number" name="height" id="height" min="0" max="1000" value="100">
+                </div>
+                <div class="flex">
+                    <label class="w-1/3" for="color">цвет</label>
+                    <input class="w-2/3" type="color" name="color" id="color">
+                </div>
+                <div class="flex">
+                    <label class="w-1/3" for="opacity">прозрачность</label>
+                    <input class="w-2/3" type="range" name="opacity" id="opacity" min="0" max="100" step="1">
+                </div>
+                <!-- если выбран полигон становится актив. а так он дисаблед, но виден -->
+                <div class="corner-count flex">
+                    <label class="w-1/3" for="corner">количество углов</label>
+                    <input class="w-2/3" type="range" name="corner" id="corner" min="3" max="100" step="1" value="3">
+                </div>
+                <!-- <button id="btn_preview">посмотреть</button> -->
+                <button class="border-2 rounded-md" id="btn_create">создать</button>
+            </form>
+            <!-- <div>
+                <h1>Предварительный просмотр</h1>
+                <p>Выбор фона</p>
+                <select name="" id="bg_preview">
+                    <option value="">-- выберите цвет фона --</option>
+                    <option value="white">белый</option>
+                    <option value="black">черный</option>
+                </select>
+                <canvas id="preview">
+
+                </canvas>
+            </div> -->
+            <div>
+                <h1>список созданных фигур</h1>
+                <!-- TODO: управление z-index у каждого элемента -->
+                <div class="overflow-auto" id="figure_list"></div>
+            </div>
         </div>
-        <div class="flex w-4/6 bg-slate-200 p-2">
-            <canvas></canvas>
+        <div class="w-4/6 bg-slate-200 p-2">
+            <p>фигурки</p>
+            <div class="border-3 border-emerald-700 relative" id="canvas"></div>
         </div>
     </div>
 </body>
