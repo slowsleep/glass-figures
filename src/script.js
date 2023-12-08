@@ -112,7 +112,7 @@ function createFigure(figure, width, height, color = "white", opacity = 1, corne
     if (figure == "rectangle" || figure == "square") {
         ctx.fillRect(10, 10, width, height);
     } else if (figure == "circle" || figure == "oval") {
-        ctx.arc(25, 25, width / 2, 0, 2*Math.PI);
+        ctx.arc(width / 2, width / 2, width / 2, 0, 2*Math.PI);
         ctx.fill();
     } else if (figure == "polygon") {
         ctx.beginPath();
