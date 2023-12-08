@@ -64,13 +64,6 @@ btnCreate.addEventListener("click", function (e) {
     // canvas.appendChild(newFigure);
 });
 
-function changeHeight() {
-    height.value = width.value;
-}
-
-function changeWidth() {
-    width.value = height.value;
-}
 
 selectFigure.addEventListener("change", function (e) {
     if (e.target.value == "polygon") {
@@ -82,13 +75,13 @@ selectFigure.addEventListener("change", function (e) {
 
 width.addEventListener("focus", function() {
     if (selectFigure.value == "square" || selectFigure.value == "circle") {
-        changeHeight()
+        height.value = width.value;
     } 
 })
 
 height.addEventListener("focus", function() {
     if (selectFigure.value == "square" || selectFigure.value == "circle") {
-        changeWidth()
+        width.value = height.value;
     } 
 })
 
