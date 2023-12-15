@@ -43,30 +43,16 @@
                     <label class="w-1/3" for="corner">количество углов</label>
                     <input class="w-2/3" type="range" name="corner" id="corner" min="3" max="10" step="1" value="3">
                 </div>
-                <!-- <button id="btn_preview">посмотреть</button> -->
                 <button class="border-2 rounded-md" id="btn_create">создать</button>
             </form>
-            <!-- <div>
-                <h1>Предварительный просмотр</h1>
-                <p>Выбор фона</p>
-                <select name="" id="bg_preview">
-                    <option value="">-- выберите цвет фона --</option>
-                    <option value="white">белый</option>
-                    <option value="black">черный</option>
-                </select>
-                <canvas id="preview">
-
-                </canvas>
-            </div> -->
             <div>
                 <h1>список созданных фигур</h1>
-                <!-- TODO: управление z-index у каждого элемента -->
                 <div class="overflow-auto" id="figure_list"></div>
             </div>
         </div>
         <div class="right w-4/6 bg-slate-200 p-2">
             <p>фигурки</p>
-            <canvas id="canvas"></canvas>
+            <div class="border border-emerald-700 h-5/6" id="canvas"></div>
         </div>
     </div>
 </body>

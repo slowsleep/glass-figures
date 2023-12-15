@@ -8,34 +8,101 @@ const opacity = document.querySelector("#opacity");
 const corner = document.querySelector("#corner");
 
 const divCorner = document.querySelector(".corner-count");
+divCorner.value = "";
 divCorner.style.display = "none";
 
 const leftSide = document.querySelector(".left");
 const rightSide = document.querySelector(".right");
 
 const canvas = document.querySelector("#canvas");
-const ctx = canvas.getContext("2d");
-let w = (canvas.width = rightSide.offsetWidth * 0.9);
-let h = (canvas.height = window.innerHeight * 0.9);
-// canvas.style.backgroundColor = 'transparent';
-canvas.style.backgroundColor = "white";
-
-let x = 0;
-let y = 0;
-
-let listFigures = [];
-
 
 btnCreate.addEventListener("click", function (e) {
     e.preventDefault();
-    let newFigure;
-    if (selectFigure.value == "polygon") {
-        newFigure = makeFigure(selectFigure.value, x, y, width.value, height.value, color.value, opacity.value, corner.value);
-
+    if (selectFigure.value == "") {
+        alert("Фигура не выбрана");
     } else {
-        newFigure = makeFigure(selectFigure.value, x, y, width.value, height.value, color.value, opacity.value);
+        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("width", width.value);
+        svg.setAttribute("height", height.value);
+
+        if (selectFigure.value == "rectangle" || selectFigure.value == "square") {
+            let rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("x", 0);
+            rect.setAttribute("y", 0);
+            rect.setAttribute("width", width.value);
+            rect.setAttribute("height", height.value);
+            rect.setAttribute("fill", color.value);
+            rect.setAttribute("fill-opacity", opacity.value);
+            svg.appendChild(rect);
+        } else if (selectFigure.value == "circle" || selectFigure.value == "oval") {
+            let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", width.value / 2);
+            circle.setAttribute("cy", width.value / 2);
+            circle.setAttribute("r", width.value / 2);
+            circle.setAttribute("fill", color.value);
+            circle.setAttribute("fill-opacity", opacity.value);
+            svg.appendChild(circle);
+        } else if (selectFigure.value == "polygon") {
+            let polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+            polygon.setAttribute("points", `0,${height.value} ${width.value / 2},0 ${width.value},${height.value}`);
+            polygon.setAttribute("fill", color.value);
+            polygon.setAttribute("fill-opacity", opacity.value);
+            svg.appendChild(polygon);
+        }
+
+        const getCoords = (elem) => {
+            const box = elem.getBoundingClientRect();
+            return {
+                top: box.top + scrollY ,
+                left: box.left + scrollX ,
+            };
+        };
+
+        svg.ondragstart = () => false;
+
+        svg.addEventListener("mousedown", function (e) {
+            const coords = getCoords(svg);
+            const shiftX = e.pageX - coords.left;
+            const shiftY = e.pageY - coords.top;
+
+            const moveAt = (e) => {
+                svg.style.left = e.pageX - shiftX + "px";
+                svg.style.top = e.pageY - shiftY + "px";
+            };
+
+            const theEnd = () => {
+                document.removeEventListener("mousemove", moveAt);
+                document.removeEventListener("mouseup", theEnd);
+            };
+
+            svg.style.position = "absolute";
+            moveAt(e);
+
+            document.addEventListener("mousemove", moveAt);
+            document.addEventListener("mouseup", theEnd);
+        });
+
+        canvas.appendChild(svg);
+
+        if (selectFigure.value == "polygon") {
+            console.log({
+                selectFigure: selectFigure.value,
+                width: width.value,
+                height: height.value,
+                color: color.value,
+                opacity: opacity.value,
+                corner: corner.value,
+            });
+        } else {
+            console.log({
+                selectFigure: selectFigure.value,
+                width: width.value,
+                height: height.value,
+                color: color.value,
+                opacity: opacity.value,
+            });
+        }
     }
-    drawFigure(newFigure)
 });
 
 selectFigure.addEventListener("change", function (e) {
@@ -58,62 +125,10 @@ height.addEventListener("focus", function () {
     }
 });
 
-
 function getTextRGBA(color, opacity) {
     const red = parseInt(color.substring(1, 3), 16);
     const green = parseInt(color.substring(3, 5), 16);
     const blue = parseInt(color.substring(5, 7), 16);
     const rgba = [red, green, blue, opacity];
     return `rgba(${rgba.join(", ")})`;
-}
-
-
-function drawRect(figure) {
-    ctx.fillRect(10, 10, figure.width, figure.height);
-}
-
-
-function drawCircle(figure) {
-    ctx.arc(figure.width / 2, figure.width / 2, figure.width / 2, 0, 2 * Math.PI);
-    ctx.fill();
-}
-
-
-function drawPolygon(figure) {
-    ctx.beginPath();
-    ctx.moveTo(160, 50);
-    ctx.lineTo(15, 250);
-    ctx.lineTo(315, 250);
-    ctx.closePath();
-    ctx.fill();
-}
-
-
-function drawFigure(figure) {
-    ctx.fillStyle = figure.color;
-
-    if (figure.shape == "rectangle" || figure.shape == "square") {
-        drawRect(figure);
-    } else if (figure.shape == "circle" || figure.shape == "oval") {
-        drawCircle(figure);
-    } else if (figure.shape == "polygon") {
-        drawPolygon(figure);
-    }
-}
-
-
-function makeFigure(shape, x=0, y=0, width, height, color="#ffffff", opacity=1, corner=false) {
-    let figure = {
-        shape: shape,
-        x: Number(x),
-        y: Number(y),
-        width: Number(width),
-        height: Number(height),
-        right: Number(x) + Number(width),
-        bottom: Number(y) + Number(height),
-        color: getTextRGBA(color, opacity),
-        corner: Number(corner)
-    };
-    listFigures.push(figure);
-    return figure;
 }
