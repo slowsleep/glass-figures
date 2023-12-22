@@ -15,6 +15,7 @@ const leftSide = document.querySelector(".left");
 const rightSide = document.querySelector(".right");
 
 const canvas = document.querySelector("#canvas");
+const canvasBackground = document.querySelector('#canvasBackground');
 
 btnCreate.addEventListener("click", function (e) {
     e.preventDefault();
@@ -132,3 +133,9 @@ function getTextRGBA(color, opacity) {
     const rgba = [red, green, blue, opacity];
     return `rgba(${rgba.join(", ")})`;
 }
+
+canvasBackground.addEventListener("change", function(e) {
+    if (e.target.value) {
+        canvas.style.backgroundColor = e.target.value;
+    }
+})
