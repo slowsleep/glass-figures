@@ -37,13 +37,13 @@ selectFigure.addEventListener("change", function (e) {
 });
 
 width.addEventListener("focus", function () {
-    if (selectFigure.value == "square" || selectFigure.value == "circle") {
+    if (selectFigure.value == "square" || selectFigure.value == "circle" || selectFigure.value == "ellipse") {
         height.value = width.value;
     }
 });
 
 height.addEventListener("focus", function () {
-    if (selectFigure.value == "square" || selectFigure.value == "circle") {
+    if (selectFigure.value == "square" || selectFigure.value == "circle" || selectFigure.value == "ellipse") {
         width.value = height.value;
     }
 });
