@@ -8,8 +8,8 @@
     <title>Стекляшки</title>
 </head>
 <body>
-    <div class="flex flex-row h-screen" id="app">
-        <div class="left flex flex-col w-2/6 bg-slate-400 p-2">
+    <div class="flex flex-row h-full" id="app">
+        <div class="left h-screen flex flex-col w-2/6 bg-slate-400 p-2">
             <form class="flex flex-col gap-y-2" action="">
                 <h1>создать фигуру</h1>
                 <div class="flex">
@@ -45,13 +45,15 @@
                 </div>
                 <button class="border-2 rounded-md" id="btn_create">создать</button>
             </form>
-            <div>
-                <h1>список созданных фигур</h1>
-                <div class="overflow-auto" id="figure_list"></div>
+            <div class="overflow-auto bg-slate-700 rounded-lg p-2 mt-3 text-slate-300">
+                <h1 class="text-center">список созданных фигур</h1>
+                <hr>
+                <div class="figure-list flex flex-col overflow-auto p-2 m-1"></div>
             </div>
         </div>
-        <div class="right w-4/6 bg-slate-200 p-2">
-            <p>фигурки</p>
+        <div class="right h-screen w-4/6 bg-slate-200 p-2">
+            <h1 class="text-center">фигурки</h1>
+            <hr>
             <label for="canvasBackground">Цвет фона</label>
             <select name="canvasBackground" id="canvasBackground">
                 <option value="">--выберите цвет фона--</option>
@@ -59,7 +61,7 @@
                 <option value="black">черный</option>
                 <option value="transparent">прозрачный</option>
             </select>
-            <div class="border border-emerald-700 h-5/6" id="canvas"></div>
+            <div class="border border-emerald-700  h-5/6" id="canvas"></div>
         </div>
     </div>
 </body>
