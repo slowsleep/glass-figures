@@ -95,7 +95,7 @@ function addFigureToCanvas(figureInfo) {
         rect.setAttribute("fill", color.value);
         rect.setAttribute("fill-opacity", opacity.value);
         svg.appendChild(rect);
-    } else if (selectFigure.value == "circle" || selectFigure.value == "oval") {
+    } else if (selectFigure.value == "circle") {
         let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         circle.setAttribute("cx", width.value / 2);
         circle.setAttribute("cy", width.value / 2);
@@ -103,6 +103,15 @@ function addFigureToCanvas(figureInfo) {
         circle.setAttribute("fill", color.value);
         circle.setAttribute("fill-opacity", opacity.value);
         svg.appendChild(circle);
+    } else if (selectFigure.value == "ellipse") {
+        let ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+        ellipse.setAttribute("cx", width.value / 2);
+        ellipse.setAttribute("cy", width.value / 2);
+        ellipse.setAttribute("rx", width.value / 2);
+        ellipse.setAttribute("ry", (width.value / 2) - width.value * 0.2);
+        ellipse.setAttribute("fill", color.value);
+        ellipse.setAttribute("fill-opacity", opacity.value);
+        svg.appendChild(ellipse);
     } else if (selectFigure.value == "polygon") {
         let polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
         polygon.setAttribute("points", `0,${height.value} ${width.value / 2},0 ${width.value},${height.value}`);
@@ -132,7 +141,6 @@ function addFigureToCanvas(figureInfo) {
             svg.style.top = e.pageY - shiftY + "px";
             figureInfo.querySelector(".figure-left").innerHTML = svg.style.left;
             figureInfo.querySelector(".figure-top").innerHTML = svg.style.top;
-            // figureInfo.innerHTML += `<p>left: ${svg.style.left}</p><p>left: ${svg.style.top}</p>`;
         };
 
         const theEnd = () => {
